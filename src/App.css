@@ -36,3 +36,59 @@
     transform: rotate(360deg);
   }
 }
+
+.view{
+  background-image: url('https://wallpaperaccess.com/full/670456.jpg'); 
+  background-repeat:initial;
+  background-size:contain;
+   background-position: center center;
+}
+
+.movie-card {
+  margin-left: 5%;
+  width: 90vw;
+  height:60vh;
+}
+
+.movie-text::-webkit-scrollbar{
+  display: none;
+}
+
+.movie-image{
+  justify-content: center;
+  width: 90vw;
+  height:60vh;
+}
+
+.movie-text{
+  height: 4.5rem;
+  overflow-y: scroll;
+  color: white;
+  font:message-box;
+}
+.movie-text:focus,
+.movie-text:active{
+  background-color: #000;
+}
+
+.trending-headline{
+  margin-left: 5%;
+  color: white;
+}
+
+.trending-div{
+  margin-top: 5%;
+}
+
+.home-nav{
+  padding-top: 1%;
+  width:100vw;
+}
+
+.footer-main-div{
+  margin-top: 5%;
+  height:fit-content;
+}
+.footer-lower{
+  margin-top: -2%;
+}
