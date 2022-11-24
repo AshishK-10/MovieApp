@@ -4,7 +4,7 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar navbar-brand fixed-top navbar-expand-lg navbar-dark bg-dark home-nav">
         <div className="container-fluid">
-          <a class="navbar-brand" href="#">
+          <a className="navbar-brand" href="#">
             <img src={require('./../icon-image.jpeg')} alt="" width="140" height="50"/>
           </a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

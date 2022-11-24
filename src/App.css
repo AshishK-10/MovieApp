@@ -38,10 +38,10 @@
 }
 
 .view{
-  background-image: url('https://wallpaperaccess.com/full/670456.jpg'); 
+  background-image: url('https://wallpaperaccess.com/full/670456.jpg');
   background-repeat:initial;
   background-size:contain;
-   background-position: center center;
+  background-position: center center;
 }
 
 .movie-card {
@@ -66,29 +66,42 @@
   color: white;
   font:message-box;
 }
-.movie-text:focus,
-.movie-text:active{
-  background-color: #000;
+
+
+.main-headline{
+  padding-top: 10%;
 }
 
-.trending-headline{
+@media (max-width: 500px){
+  .main-headline{
+    padding-top: 20%;
+  }
+}
+
+.headline{
   margin-left: 5%;
+  margin-bottom: 1%;
   color: white;
 }
 
-.trending-div{
+.headline-div{
   margin-top: 5%;
 }
 
 .home-nav{
-  padding-top: 1%;
   width:100vw;
+  height: fit-content;
 }
 
-.footer-main-div{
-  margin-top: 5%;
-  height:fit-content;
+.navbar-toggler-icon{
+  background-image:in;
 }
-.footer-lower{
-  margin-top: -2%;
+
+.icon-footer:hover{
+  color:purple;
+  transform: scale(1.4);
+}
+
+.footer-text:hover{
+ color: purple !important;
 }
