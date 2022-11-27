@@ -98,7 +98,7 @@ export default class Banner extends Component {
 
                       {
                         this.state.hover === index &&
-                        <button type="button" className="btn btn-success"  id = {movie.id}>Add to Favourites</button>
+                        <button type="button" className="btn btn-primary"  id = {movie.id}>Add to Favourites</button>
                       }
 
                       <h5>{movie.title || movie.name}</h5>
@@ -113,6 +113,7 @@ export default class Banner extends Component {
               <span className="carousel-control-prev-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Previous</span>
             </button>
+
             <button className="carousel-control-next" onClick={this.next_movies} type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
               <span className="carousel-control-next-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Next</span>

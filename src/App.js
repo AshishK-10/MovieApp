@@ -13,7 +13,7 @@ function App() {
         taglines.map((tagline, index) => {
           return(
             <div className = "headline-div" key = {index}>
-              <h1 className= {index == 0 ? "display-4 headline main-headline footer-text" : "display-5 headline footer-text"}>{tagline}</h1>
+              <h1 className= {index == 0 ? "display-3 headline headline-text main-headline" : "display-5 headline headline-text"}>{tagline}</h1>
               <Banner/>
               <hr></hr>
             </div>
