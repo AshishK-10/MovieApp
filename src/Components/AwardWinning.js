@@ -15,7 +15,6 @@ export default class AwardWinning extends Component {
   async componentDidMount(){
     let res = await axios.get(`${process.env.REACT_APP_HEADER}/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${this.state.curr_page}`);
     let data = res.data
-    console.log(data)
     this.setState({
       movies:[...data.results]
     })

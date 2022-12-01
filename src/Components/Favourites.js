@@ -26,11 +26,12 @@ export default class Favourites extends Component {
   get_genre = (movies) => {
     let unique_ids = []
     movies.map((movie)=>{
-      movie.genre_ids.map((id)=>{
+      return(
+      movie.genre_ids.forEach((id)=>{
         if (!unique_ids.includes(id))
           unique_ids.push(id)
       })
-    })
+    )})
     return unique_ids
   }
 
@@ -46,7 +47,7 @@ export default class Favourites extends Component {
           <div className='col-3'>
             <p class="fst-italic" style={{textAlign:"center", marginRight: '28%'}}><b>Filters</b></p>
             <ul className="nav flex-column favorites-genres">
-              { this.state.curr_genre == 'all_genres' ?
+              { this.state.curr_genre === 'all_genres' ?
                 <li className="nav-item">
                   <p className="nav-link btn selected-genre">All Genres</p>
                 </li>
@@ -95,7 +96,7 @@ export default class Favourites extends Component {
                     this.state.movies.map((movie,index) =>{
                       return (
                         <tr key = {index}>
-                          <td><img src = {`${process.env.REACT_APP_API_POSTER_PATH}${movie.backdrop_path}`}
+                          <td><img src = {`${process.env.REACT_APP_API_POSTER_PATH}${movie.backdrop_path}`}alt = ""
                           className = "fav-image"/></td>
 
                           <td>{movie.title || movie.name}</td>

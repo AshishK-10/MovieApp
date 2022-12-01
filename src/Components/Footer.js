@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-let icons =["fab fa-google icon-footer", "fab fa-linkedin icon-footer", "fab fa-github icon-footer"]
+let icons =[{name: "fab fa-google icon-footer", link: '/' }, {name:"fab fa-linkedin icon-footer", link: '#'},{name: "fab fa-github icon-footer", link: "https://github.com/AshishK-10/MovieApp"}]
 export default class Footer extends Component {
   render() {
     return (
@@ -8,13 +8,13 @@ export default class Footer extends Component {
            {
             icons.map( (icon,index) => {
               return(
-              <a className = "m-1 text-white mx-3 fs-3 " href="#" role="button" key = {index}>
-              <i className={icon}></i>
+              <a className = "m-1 text-white mx-3 fs-3 " href={icon.link} role="button" key = {index}>
+              <i className={icon.name}></i>
               </a>
             )})
            }
             <div className="text-center mt-2">
-              <a className="text-white footer-text" href="#">&#169;{new Date().getFullYear()} MovieMaker.com</a>
+              <a className="text-white footer-text" href="/">&#169;{new Date().getFullYear()} MovieMaker.com</a>
             </div>
         </div>
       </footer>
