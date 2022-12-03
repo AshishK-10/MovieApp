@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+import {Link} from 'react-router-dom'
 export default class Trending extends Component {
   constructor(){
     super();
@@ -94,6 +94,10 @@ export default class Trending extends Component {
     this.setState({favourites: [...temp]})
   }
 
+  movieDetails = (e)=>{
+     e.preventDefault();
+     console.log("clicked!")
+  }
   render() {
     return (
       <div className = "movie-card">
@@ -116,28 +120,32 @@ export default class Trending extends Component {
             <div className="carousel-inner">
               {this.state.movies.map((movie,index) => {
                  return (
-                  <div className= {index === 0 ? "carousel-item active" : "carousel-item"} key = {movie.id} onMouseEnter = {()=>this.setState({hover: index})} onMouseLeave = {()=> this.setState({hover:''})}>
-                    <img src={`${process.env.REACT_APP_API_POSTER_PATH}${movie.backdrop_path}`} className="d-block w-100 movie-image" alt="..."/>
-                    <div className="carousel-caption d-md-blok">
+                    <div className= {index === 0 ? "carousel-item active" : "carousel-item"} key = {movie.id} onMouseEnter = {()=>this.setState({hover: index})} onMouseLeave = {()=> this.setState({hover:''})}>
+                      <Link to= {{
+                        pathname: `/movie`,
+                        query: {
+                          content: movie}
+                          }}>
+                      <img src={`${process.env.REACT_APP_API_POSTER_PATH}${movie.backdrop_path}`} className="d-block w-100 movie-image" alt="..."/>
+                      </Link>
+                      <div className="carousel-caption d-md-blok">
 
-                      {
-                        this.state.hover === index &&
-                        <button type="button" className = {this.state.favourites.includes(movie.id)
-                          ? "btn btn-danger" : "btn btn-primary" }
-                          id = {movie.id} onClick = {()=>{this.handleFavourites(movie)}}>
-                          {this.state.favourites.includes(movie.id)
-                          ? "Remove from Favourites"
-                          : "Add to Favourites"}
-                        </button>
-                      }
-
-                      <h5>{movie.title || movie.name}</h5>
-                      <p className = "movie-text">{movie.overview}</p>
+                        {
+                          this.state.hover === index &&
+                          <button type="button" className = {this.state.favourites.includes(movie.id)
+                            ? "btn btn-danger" : "btn btn-primary" }
+                            id = {movie.id} onClick = {()=>{this.handleFavourites(movie)}}>
+                            {this.state.favourites.includes(movie.id)
+                            ? "Remove from Favourites"
+                            : "Add to Favourites"}
+                          </button>
+                        }
+                        <h5>{movie.title || movie.name}</h5>
+                        <p className = "movie-text">{movie.overview}</p>
+                      </div>
                     </div>
-                  </div>
                  )
               })}
-
             </div>
             <button className="carousel-control-prev" onClick={this.previous_movies} type="button" data-bs-target="#carouselExampleCaptionsTrending" data-bs-slide="prev">
               <span className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -153,4 +161,8 @@ export default class Trending extends Component {
       </div>
     )
   }
+}
+
+function get_click(){
+console.log("clicked")
 }

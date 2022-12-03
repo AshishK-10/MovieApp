@@ -5,3 +5,5 @@ export const genre_ids = { 28: 'Action', 12: 'Adventure', 16: 'Animation', 35: '
                           53: 'Thriller', 10752: 'War', 37: 'Western' };
 
 export const  table_headers = ["", "Title", "Genre", "Popularity", "Rating", ""]
+
+export const  months = ["Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October","November", "December"]
