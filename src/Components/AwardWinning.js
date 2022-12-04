@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 export default class AwardWinning extends Component {
   constructor(){
@@ -99,9 +100,11 @@ export default class AwardWinning extends Component {
         {
           this.state.movies.length === 0
           ?
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
+          <div className="d-flex justify-content-center">
+            <div className="spinner-grow text-primary mt-5" role="status">
+              <span className="sr-only">Loading...</span>
             </div>
+          </div>
           :
           <div id="carouselExampleCaptionsAward" className="carousel slide" data-bs-ride="false">
             <div className="carousel-indicators">
@@ -116,7 +119,11 @@ export default class AwardWinning extends Component {
               {this.state.movies.map((movie,index) => {
                  return (
                   <div className= {index === 0 ? "carousel-item active" : "carousel-item"} key = {movie.id} onMouseEnter = {()=>this.setState({hover: index})} onMouseLeave = {()=> this.setState({hover:''})}>
-                    <img src={`${process.env.REACT_APP_API_POSTER_PATH}${movie.backdrop_path}`} className="d-block w-100 movie-image" alt="..."/>
+                    <Link to= {{
+                        pathname: `/movie/${movie.id}`,
+                          }}>
+                      <img src={`${process.env.REACT_APP_API_POSTER_PATH}${movie.backdrop_path}`} className="d-block w-100 movie-image" alt="..."/>
+                    </Link>
                     <div className="carousel-caption d-md-blok">
 
                     {

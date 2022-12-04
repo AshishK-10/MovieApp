@@ -5,24 +5,26 @@ import { RatingStar } from "rating-star";
 import {genre_ids,months} from './FavoritesHelper'
 import './../MovieDetails.css'
 import './../App.css'
+import axios from 'axios'
 
 export default class MovieDetails extends Component {
   constructor(){
     super();
     this.state = {
-      current_movie: JSON.parse(localStorage.getItem('favourites') == null
-                     ? "[]"
-                     : localStorage.getItem('favourites'))[0],
+      current_movie_id: window.location.pathname.split('/')[2],
+      current_movie : [],
       favourites: JSON.parse(localStorage.getItem('favourites') == null
-      ? "[]"
-      : localStorage.getItem('favourites')).map((movie)=>{return (movie.id)})
+                  ? "[]"
+                  : localStorage.getItem('favourites')).map((movie)=>{return (movie.id)}),
     }
-
-    console.log(this.state.current_movie)
   }
-  get_genre = () =>{
-    let str = this.state.current_movie.genre_ids.map((id)=> genre_ids[id]);
-    return str;
+
+  async componentDidMount(){
+    let res = await axios.get(`${process.env.REACT_APP_HEADER}/3/movie/${this.state.current_movie_id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`);
+    let data = res.data
+    this.setState({
+      current_movie: {...data}
+    })
   }
 
   convertDate = () => {
@@ -33,7 +35,7 @@ export default class MovieDetails extends Component {
   }
 
   handleFavourites = (movie) => {
-    let localData = JSON.parse(localStorage.getItem('favourites') == null
+    let localData = JSON.parse(localStorage.getItem('favourites').length === 0
                     ? "[]"
                     : localStorage.getItem('favourites'))
 
@@ -56,53 +58,72 @@ export default class MovieDetails extends Component {
     return (
       <div>
         <Navbar/>
-        <div class="container">
-          <div class="card">
-            <div class="container-fliud">
-              <div class="wrapper row">
-                <div class="preview col-md-6">
-
-                  <div class="preview-pic tab-content fst-italic">
-                    <div class="tab-panel active movie-div"><img class = "movie-pic" src= {`${process.env.REACT_APP_API_POSTER_PATH}${this.state.current_movie.backdrop_path}`} /></div>
-                    <h2 class="product-title">{this.state.current_movie.title || this.state.current_movie.name}</h2>
-                    <div className = "product-title">
+        {
+          this.state.current_movie.length === 0
+          ?
+          <div className="d-flex justify-content-center">
+            <div className="spinner-grow text-primary mt-5" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+          :
+          <div className="container">
+            <div className="card">
+              <div className="container-fliud">
+                <div className="wrapper row">
+                  <div className="preview col-md-6">
+                    <div className="preview-pic tab-content fst-italic">
+                      <div className="tab-panel active movie-div"><img className = "movie-pic" src= {`${process.env.REACT_APP_API_POSTER_PATH}${this.state.current_movie.backdrop_path}`} /></div>
+                      <h2 className="product-title">{this.state.current_movie.title || this.state.current_movie.name}</h2>
+                      <div className = "product-title">
+                        {
+                          this.state.current_movie.genres.map((genre,index)=>{
+                            return(
+                              <h4 className = "badge bg-primary genre_badge" key = {index}>{genre.name}</h4>
+                            )
+                          })
+                        }
+                      </div>
+                      <h5><b>Story:</b></h5>
+                      <p className="product-description">{this.state.current_movie.overview}</p>
+                    </div>
+                  </div>
+                  <div className="details col-md-6 fst-italic">
+                    <p className = "mt-3">{this.state.current_movie.tagline ? <strong>&#10077; {this.state.current_movie.tagline}&#10078;</strong>:""}</p>
+                    <div className="rating-star">
                       {
-                        this.state.current_movie.genre_ids.map((id)=>{
-                          return(<h4 class = "badge bg-primary genre_badge">{genre_ids[id]}</h4>)
-                        })
+                        <RatingStar id="rating-star" rating={(this.state.current_movie.vote_average/10)*5} size = {50}/>
                       }
                     </div>
-                    <h5><b>Story:</b></h5>
-                    <p class="product-description">{this.state.current_movie.overview}</p>
-                  </div>
+                    <p className="vote" key = "r-rated"><strong>R-Rated: </strong>{this.state.current_movie.adult === false ? "No" : "Yes"}</p>
+                    <p className="vote" key = "origin-contry"><strong>Origin Country: <span className = {"lang-icon lang-icon-"+this.state.current_movie.original_language}></span></strong></p>
+                    <p className="vote" key = "language-present"><strong>Language Present:
+                      {
+                        this.state.current_movie.spoken_languages.map((language,index)=>{
+                          return(
+                            <span className = {"lang-icon lang-icon-"+language.iso_639_1} key = {index}></span>
+                          )
+                        })
+                      }
+                    </strong></p>
+                    <p className="vote" key = "runtime"><strong> Runtime: {this.state.current_movie.runtime} minutes</strong></p>
+                    <p className="vote" key = "released-on"><strong>Released On: {this.convertDate()}</strong></p>
+                    <div className = {this.state.favourites.includes(this.state.current_movie.id)
+                            ? "vote btn btn-danger remove-fav" : "vote btn btn-primary" } onClick = {()=>this.handleFavourites(this.state.current_movie)}>
+                      <p className="fav-btn"> <span className = {this.state.favourites.includes(this.state.current_movie.id)
+                            ? "fa fa-heart blue" : "fa fa-heart red"}></span>
+                        {this.state.favourites.includes(this.state.current_movie.id)
+                              ? "Remove from Favourites"
+                              : "Add to Favourites"}
+                      </p>
+                    </div>
 
-                </div>
-                <div class="details col-md-6 fst-italic">
-                  <div class="rating-star">
-                    {
-                      <RatingStar id={this.state.current_movie.id} rating={(this.state.current_movie.vote_average/10)*5} size = {50}/>
-                    }
                   </div>
-                  <span class="review-no vote fst-italic">{this.state.current_movie.vote_count} Votes</span>
-                  <p class="vote"><strong>R-Rated: </strong>{this.state.current_movie.adult === false ? "No" : "Yes"}</p>
-                  <p class="vote"><strong>Language: <span class = {"lang-icon lang-icon-"+this.state.current_movie.original_language}></span></strong></p>
-                  <p class="vote"><strong>Released On: {this.convertDate()}</strong></p>
-
-                  <div className = {this.state.favourites.includes(this.state.current_movie.id)
-                          ? "vote btn btn-danger remove-fav" : "vote btn btn-primary" } onClick = {()=>this.handleFavourites(this.state.current_movie)}>
-                    <p class="fav-btn"> <span className = {this.state.favourites.includes(this.state.current_movie.id)
-                          ? "fa fa-heart blue" : "fa fa-heart red"}></span>
-                      {this.state.favourites.includes(this.state.current_movie.id)
-                            ? "Remove from Favourites"
-                            : "Add to Favourites"}
-                    </p>
-                  </div>
-
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        }
         <Footer/>
       </div>
     )

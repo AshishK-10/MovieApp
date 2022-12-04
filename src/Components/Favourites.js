@@ -45,7 +45,7 @@ export default class Favourites extends Component {
         <Navbar/>
         <div className='row'>
           <div className='col-3'>
-            <p class="fst-italic" style={{textAlign:"center", marginRight: '28%'}}><b>Filters</b></p>
+            <p className="fst-italic" style={{textAlign:"center", marginRight: '28%'}}><b>Filters</b></p>
             <ul className="nav flex-column favorites-genres">
               { this.state.curr_genre === 'all_genres' ?
                 <li className="nav-item">
