@@ -159,7 +159,3 @@ export default class Trending extends Component {
     )
   }
 }
-
-function get_click(){
-console.log("clicked")
-}

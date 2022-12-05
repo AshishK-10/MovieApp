@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { RatingStar } from "rating-star";
-import {genre_ids,months} from './FavoritesHelper'
+import {months} from './FavoritesHelper'
 import './../MovieDetails.css'
 import './../App.css'
 import axios from 'axios'
@@ -73,7 +73,7 @@ export default class MovieDetails extends Component {
                 <div className="wrapper row">
                   <div className="preview col-md-6">
                     <div className="preview-pic tab-content fst-italic">
-                      <div className="tab-panel active movie-div"><img className = "movie-pic" src= {`${process.env.REACT_APP_API_POSTER_PATH}${this.state.current_movie.backdrop_path}`} /></div>
+                      <div className="tab-panel active movie-div"><img className = "movie-pic" src= {`${process.env.REACT_APP_API_POSTER_PATH}${this.state.current_movie.backdrop_path}`} alt = ""/></div>
                       <h2 className="product-title">{this.state.current_movie.title || this.state.current_movie.name}</h2>
                       <div className = "product-title">
                         {
@@ -96,8 +96,18 @@ export default class MovieDetails extends Component {
                       }
                     </div>
                     <p className="vote" key = "r-rated"><strong>R-Rated: </strong>{this.state.current_movie.adult === false ? "No" : "Yes"}</p>
-                    <p className="vote" key = "origin-contry"><strong>Origin Country: <span className = {"lang-icon lang-icon-"+this.state.current_movie.original_language}></span></strong></p>
-                    <p className="vote" key = "language-present"><strong>Language Present:
+                    <p className="vote" key = "countries"><strong>Countries: </strong>
+                      <ul>
+                        {
+                          this.state.current_movie.production_countries.map((country,index)=>{
+                            return(
+                              <li className = "badge bg-info text-dark" key = {index}>{country.name}</li>
+                            )
+                          })
+                        }
+                      </ul>
+                    </p>
+                    <p className="vote" key = "language-present"><strong>Languages:
                       {
                         this.state.current_movie.spoken_languages.map((language,index)=>{
                           return(
