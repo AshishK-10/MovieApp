@@ -96,7 +96,7 @@ export default class MovieDetails extends Component {
                       }
                     </div>
                     <p className="vote" key = "r-rated"><strong>R-Rated: </strong>{this.state.current_movie.adult === false ? "No" : "Yes"}</p>
-                    <p className="vote" key = "countries"><strong>Countries: </strong>
+                    <p className="vote countries" key = "countries"><strong>Countries: </strong>
                       <ul>
                         {
                           this.state.current_movie.production_countries.map((country,index)=>{
@@ -121,7 +121,7 @@ export default class MovieDetails extends Component {
                     <div className = {this.state.favourites.includes(this.state.current_movie.id)
                             ? "vote btn btn-danger remove-fav" : "vote btn btn-primary" } onClick = {()=>this.handleFavourites(this.state.current_movie)}>
                       <p className="fav-btn"> <span className = {this.state.favourites.includes(this.state.current_movie.id)
-                            ? "fa fa-heart blue" : "fa fa-heart red"}></span>
+                            ? "fa fa-heart" : "fa fa-heart red"}></span>
                         {this.state.favourites.includes(this.state.current_movie.id)
                               ? "Remove from Favourites"
                               : "Add to Favourites"}

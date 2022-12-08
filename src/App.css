@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  box-sizing: border-box;
 }
 
 .App-logo {
@@ -121,6 +122,11 @@
   background-image:in;
 }
 
+footer{
+  width:99vw;
+  height: fit-content;
+}
+
 .icon-footer:hover{
   color:purple;
   transform: scale(1.4);
@@ -140,26 +146,6 @@
   background-color: white;
 }
 
-.favorites-genres{
-  width: fit-content;
-  height: fit-content;
-  border-style:ridge;
-  border-radius: 20px;
-  border-width: 0ch;
-  padding: 3rem;
-  margin-left: 3%;
-  background-color: #315fb5;
-}
-
-.genre-btn{
-  text-align: start;
-  color: white;
-  font-weight: bold;
-}
-
-.favorites-table{
-  padding: 3rem;
-}
 
 .fav-image{
   height: 10vh;
@@ -168,24 +154,10 @@
   justify-content: center;
 }
 
-.genre-list{
-  background-color: blue;
-}
-
-.selected-genre{
-  text-align: start;
-  background-color: white;
-  color: #315fb5;
-}
 
 .genre-btn:hover{
-  background-color: white;
-  color: #315fb5;
-}
-
-.selected-genre:hover{
-  background-color: white;
-  color: #315fb5;
+  background-color: blue;
+  transform: scale(1.1)
 }
 
 
@@ -265,4 +237,36 @@ div.text a:hover {
 .lang-icon{
   margin-left: 1px;
   margin-right: 1px;
+}
+
+.countries{
+  margin-bottom:0px;
+}
+
+.countries ul{
+  display:inline-block;
+  padding:1px;
+}
+
+.countries ul li{
+  margin-right:1px;
+}
+
+
+
+.favorites-genres::-webkit-scrollbar{
+  display: none;
+}
+
+
+::-webkit-scrollbar {
+  /* // Width of vertical scroll bar/ */
+  width: 8px;
+  /* // Height of horizontal scroll bar */
+  height: 10px;
+
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #c2c9d2;
 }

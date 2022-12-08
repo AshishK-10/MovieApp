@@ -14,7 +14,7 @@ export default class Footer extends Component {
             )})
            }
             <div className="text-center mt-2">
-              <a className="text-white footer-text" href="/">&#169;{new Date().getFullYear()} MovieMaker.com</a>
+              <a className="text-white footer-text" style={{textDecoration:"none"}} href="/">&#169;{new Date().getFullYear()} MovieMaker.com</a>
             </div>
         </div>
       </footer>
