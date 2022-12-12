@@ -270,3 +270,35 @@ div.text a:hover {
   border-radius: 8px;
   background: #c2c9d2;
 }
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+.popularity_sort{
+  display:inline-flex
+}
+
+
+.arrow-down{
+  padding-top: 5%;
+  padding-right: -3%;
+}
+.arrowUp-icon:hover{
+  cursor: pointer;
+}
+
+.arrow-down:hover{
+  cursor: pointer;
+ }

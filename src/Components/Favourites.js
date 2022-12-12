@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import {genre_hash, id_to_genre , table_headers} from './FavoritesHelper'
 import {Link} from 'react-router-dom'
+import { all } from 'axios';
 
 export default class Favourites extends Component {
   constructor(){
@@ -42,8 +43,8 @@ export default class Favourites extends Component {
        {
         movie.genres.forEach((genre) =>
          {
-             if(!unique_genres.includes(genre))
-          	    unique_genres.push(genre);
+             if(!unique_genres.includes(genre.name))
+          	    unique_genres.push(genre.name);
          })
        }
     })
@@ -85,6 +86,20 @@ export default class Favourites extends Component {
     return GenreIndex !== -1
   }
 
+  handlePopularitySortDesc = (movies)=> {
+     movies = movies.sort(function(a,b){
+      return b.popularity - a.popularity
+     })
+     this.setState({filtered_movies : [...movies]})
+  }
+
+  handlePopularitySortAsc = (movies)=> {
+    movies = movies.sort(function(a,b){
+     return a.popularity - b.popularity
+    })
+    this.setState({filtered_movies : [...movies]})
+ }
+
   render() {
     {
       let flag = true
@@ -114,8 +129,8 @@ export default class Favourites extends Component {
         <div className='row '>
           <div className='col-3'>
             <div>
-              <div class="d-flex flex-column justify-content-center flex-shrink-0 p-3 text-white bg-dark" style={{width: "280px"}}>
-                <a  class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+              <div className="d-flex flex-column justify-content-center flex-shrink-0 p-3 text-white bg-dark" style={{width: "280px"}}>
+                <a  className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                   <span className="fs-4">Filters</span>
                 </a>
                 <hr/>
@@ -126,9 +141,9 @@ export default class Favourites extends Component {
                     </a>
                   </li>
                     {
-                      this.state.genres.map((genre,index) => {
+                      this.state.genres.map((genre, index) => {
                         return(
-                        <li>
+                        <li key = {index}>
                           <a href = "#" className = {this.state.curr_genre === genre ? "nav-link active" : "nav-link text-white genre-btn"} onClick={()=>{this.setState({curr_genre: genre}, () => this.filter_movies())}}>
                             {genre}
                           </a>
@@ -138,41 +153,13 @@ export default class Favourites extends Component {
                 </ul>
               </div>
             </div>
-            {/* <div className='favorites-genres fixed-top'>
-            <p className="fst-italic" style={{textAlign:"center", marginRight: '28%'}}><b>Filters</b></p>
-              <ul className="nav flex-column">
-                { this.state.curr_genre === 'all_genres' ?
-                  <li className="nav-item">
-                    <p className="nav-link btn selected-genre">All Genres</p>
-                  </li>
-                  :
-                  <li className="nav-item">
-                    <p className="nav-link btn genre-btn" onClick={()=>{this.setState({curr_genre: 'all_genres'}, () => this.filter_movies())}}>All Genres</p>
-                  </li>
-                }
-                {
-                  this.state.genres.map((genre,index) => {
-                    return(
-                      this.state.curr_genre === genre
-                      ?
-                        <li className="nav-item" key = {index}>
-                          <p className="nav-link btn selected-genre">{genre}</p>
-                        </li>
-                      :
-                        <li className="nav-item" key = {index}>
-                          <p className="nav-link btn genre-btn" onClick={()=>{this.setState({curr_genre: genre},()=>this.filter_movies())}}>{genre}</p>
-                        </li>
-                    )
-                  })
-                }
-              </ul>
-            </div> */}
           </div>
-
           <div className="col-9 favourite-table">
-            <div className='row'>
-              <input type="text" className="input-group-text col" placeholder='Movie Name' value = {this.state.searched_text} onChange = { (e) => this.setState({searched_text: e.target.value})}/>
-              <input type="number" className="input-group-text col" placeholder='Rows'/>
+            <div className='row main'>
+              <div className="form-group has-search">
+                <span className="fa fa-search form-control-feedback"></span>
+                <input type="text" className="form-control" placeholder="Search Movie" value = {this.state.searched_text} onChange = { (e) => this.setState({searched_text: e.target.value})}/>
+              </div>
             </div>
             <div className='row'>
               <table className="table">
@@ -181,7 +168,9 @@ export default class Favourites extends Component {
                     {
                       table_headers.map((header,index)=>{
                         return(
-                          <th scope="col" key = {index}>{header}</th>
+                          header === 'Popularity'
+                          ? <div className = "popularity_sort" key = {index}> <i className = "fa fa-sort-up arrowUp-icon" onClick = {(e)=> {this.handlePopularitySortDesc(filter_array)}}> </i><i className = "fa fa-sort-down arrow-down" onClick={()=>{this.handlePopularitySortAsc(filter_array)}}> </i> <th scope="col" key = {index}>{header}</th> </div>
+                          : <th scope="col" key = {index}>{header}</th>
                         )
                       })
                     }
@@ -222,13 +211,11 @@ export default class Favourites extends Component {
                               })
                             }
                           </td>
-
                           <td>{movie.popularity}</td>
-                          <td>{movie.vote_average}</td>
                           <td><button type="button" id = {index} className="btn btn-danger" onClick = {()=> {this.setState({
                                                                                                               movies: [...this.remove_movies()]
                                                                                                             },
-                                                                                                             () => this.setState({genres: this.get_genre(), filtered_movies: this.state.movies},()=>console.log("genre set=>", this.state.genres)))}}>Remove</button></td>
+                                                                                                            () => this.setState({genres: this.get_genre(), filtered_movies: this.state.movies},()=>console.log("genre set=>", this.state.genres)))}}>Remove</button></td>
                         </tr>
                       )
                     })
@@ -238,6 +225,23 @@ export default class Favourites extends Component {
             </div>
           </div>
         </div>
+        <nav aria-label="Page navigation example">
+          <ul className="pagination justify-content-center">
+            <li className="page-item">
+              <a className="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li className="page-item"><a className="page-link" href="#">1</a></li>
+            <li className="page-item"><a className="page-link" href="#">2</a></li>
+            <li className="page-item"><a className="page-link" href="#">3</a></li>
+            <li className="page-item">
+              <a className="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     )
   }
