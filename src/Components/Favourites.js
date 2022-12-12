@@ -16,6 +16,8 @@ export default class Favourites extends Component {
       filtered_movies: [],
       curr_genre: 'all_genres',
       searched_text : '',
+      curr_page : 1,
+      limit: 5,
     }
   }
 
@@ -52,13 +54,10 @@ export default class Favourites extends Component {
   }
 
   remove_favorites = (id)=>{
-    console.log("entered remove section")
-    let favs = JSON.parse(localStorage.getItem('favourites') == null
-                            ? "[]"
-                            : localStorage.getItem('favourites'))
-    favs = favs.filter((favMovie)=>favMovie.id !== id)
+    console.log("entered remove section", id)
+    let favs = this.state.movies.filter((favMovie)=>favMovie.id !== id)
+    this.setState({movies: [...favs], filtered_movies: [...favs]})
     localStorage.setItem('favourites', JSON.stringify(favs));
-    return favs;
   }
 
   filter_movies = () => {
@@ -122,6 +121,19 @@ export default class Favourites extends Component {
         flag = false
       }
     }
+
+    let pages = filter_array.length / this.state.limit;
+    let pages_array = []
+    for(let i = 1; i <= pages ; ++i)
+    {
+      pages_array.push(i)
+    }
+    // this is the start index of current page
+    let start_index = (this.state.curr_page - 1) * this.state.limit
+    // this is the end  index of current page
+    let end_index = start_index + this.state.limit
+
+    filter_array = filter_array.slice(start_index, end_index)
 
     return (
       <div className='main favorites-tab'>
@@ -212,10 +224,8 @@ export default class Favourites extends Component {
                             }
                           </td>
                           <td>{movie.popularity}</td>
-                          <td><button type="button" id = {index} className="btn btn-danger" onClick = {()=> {this.setState({
-                                                                                                              movies: [...this.remove_movies()]
-                                                                                                            },
-                                                                                                            () => this.setState({genres: this.get_genre(), filtered_movies: this.state.movies},()=>console.log("genre set=>", this.state.genres)))}}>Remove</button></td>
+                          <td><button type="button" id = {index} className="btn btn-danger" onClick = {()=>{this.remove_favorites(movie.id)}}>
+                            Remove</button></td>
                         </tr>
                       )
                     })
@@ -223,25 +233,19 @@ export default class Favourites extends Component {
                 </tbody>
               </table>
             </div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                {
+                  pages_array.map((page) => {
+                    return(
+                      <li className ="page-item" key = {page} onClick = {(e) => this.setState({curr_page: e.target.innerText})}><a href = "#" className="page-link">{page}</a></li>
+                    )
+                  })
+                }
+              </ul>
+            </nav>
           </div>
         </div>
-        <nav aria-label="Page navigation example">
-          <ul className="pagination justify-content-center">
-            <li className="page-item">
-              <a className="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li className="page-item"><a className="page-link" href="#">1</a></li>
-            <li className="page-item"><a className="page-link" href="#">2</a></li>
-            <li className="page-item"><a className="page-link" href="#">3</a></li>
-            <li className="page-item">
-              <a className="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
       </div>
     )
   }
