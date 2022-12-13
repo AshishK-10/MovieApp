@@ -140,7 +140,7 @@ export default class Favourites extends Component {
           <div className='col-3'>
             <div>
               <div className="d-flex flex-column justify-content-center flex-shrink-0 p-3 text-white bg-dark" style={{width: "280px", marginTop: '-40px'}}>
-                <a  className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <a className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                   <span className="fs-4">Filters</span>
                 </a>
                 <hr/>
