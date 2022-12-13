@@ -39,7 +39,7 @@ export default class Navbar extends Component {
                 <a className = {this.state.curr_selected.length > 0 && this.state.curr_selected[0] === "home" ? "nav-link active" : "nav-link"} aria-current="page" href="/" onClick={()=>this.handleNavChange('home')}>Home</a>
               </li>
               <li className="nav-item">
-                <a className={this.state.curr_selected.length > 0 && this.state.curr_selected[0] === "favorites" ? "nav-link active" : "nav-link"} href="/favourites" onClick={()=>this.handleNavChange('favorites')}>Favourites</a>
+                <a className={this.state.curr_selected.length > 0 && this.state.curr_selected[0] === "favorites" ? "nav-link active" : "nav-link"} href="/home/favourites" onClick={()=>this.handleNavChange('favorites')}>Favourites</a>
               </li>
             </ul>
             <div className="d-flex nav-item dropdown navbar-dropdown">

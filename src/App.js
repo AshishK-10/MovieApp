@@ -9,12 +9,11 @@ function App() {
          <BrowserRouter>
            <Routes>
              <Route key = "home" path="/" element={<Home />} />
-             <Route key = "favorites" path="/favourites" element={<Favourites />} />
+             <Route key = "favorites" exact path="/home/favourites" element={<Favourites />} />
              <Route key = "movie-details" exact path="/movie/:id" element={<MovieDetails/>} />
              <Route key = "noPage" path="*" element={<NoPage/>} />
            </Routes>
          </BrowserRouter>
-           {/* <MovieDetails /> */}
     </div>
   );
 }
