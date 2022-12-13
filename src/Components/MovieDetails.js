@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { RatingStar } from "rating-star";
-import {months} from './FavoritesHelper'
+import {months} from './Helper'
 import './../MovieDetails.css'
 import './../App.css'
 import axios from 'axios'

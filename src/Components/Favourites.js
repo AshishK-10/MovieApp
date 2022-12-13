@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from "./Navbar";
-import Footer from "./Footer";
-import {genre_hash, id_to_genre , table_headers} from './FavoritesHelper'
+import {genre_hash, id_to_genre , table_headers} from './Helper'
 import {Link} from 'react-router-dom'
-import { all } from 'axios';
 
 export default class Favourites extends Component {
   constructor(){
@@ -141,7 +139,7 @@ export default class Favourites extends Component {
         <div className='row '>
           <div className='col-3'>
             <div>
-              <div className="d-flex flex-column justify-content-center flex-shrink-0 p-3 text-white bg-dark" style={{width: "280px"}}>
+              <div className="d-flex flex-column justify-content-center flex-shrink-0 p-3 text-white bg-dark" style={{width: "280px", marginTop: '-40px'}}>
                 <a  className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                   <span className="fs-4">Filters</span>
                 </a>
@@ -181,7 +179,12 @@ export default class Favourites extends Component {
                       table_headers.map((header,index)=>{
                         return(
                           header === 'Popularity'
-                          ? <div className = "popularity_sort" key = {index}> <i className = "fa fa-sort-up arrowUp-icon" onClick = {(e)=> {this.handlePopularitySortDesc(filter_array)}}> </i><i className = "fa fa-sort-down arrow-down" onClick={()=>{this.handlePopularitySortAsc(filter_array)}}> </i> <th scope="col" key = {index}>{header}</th> </div>
+                          ? <div className = "popularity_sort" key = {index}>
+                            <span className='d-flex flex-column align-items-center justify-content-center gap-0'>
+                            <i className = "fa fa-sort-up arrowUp-icon" onClick = {(e)=> {this.handlePopularitySortDesc(filter_array)}}> </i>
+                            <i style={{marginTop:"-10px"}} className = "fa fa-sort-down arrow-down"
+                            onClick={()=>{this.handlePopularitySortAsc(filter_array)}}> </i>
+                            </span> <th scope="col" key = {index}>{header}</th> </div>
                           : <th scope="col" key = {index}>{header}</th>
                         )
                       })

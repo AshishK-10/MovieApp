@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-let icons =[{name: "fab fa-google icon-footer", link: '/' }, {name:"fab fa-linkedin icon-footer", link: '#'},{name: "fab fa-github icon-footer", link: "https://github.com/AshishK-10/MovieApp"}]
+let icons =[{name: "fab fa-google icon-footer", link: '/' }, {name:"fab fa-linkedin icon-footer", link: 'https://www.linkedin.com/in/ashish-kumar-24b482204/'},{name: "fab fa-github icon-footer", link: "https://github.com/AshishK-10/MovieApp"}]
 export default class Footer extends Component {
   render() {
     return (
