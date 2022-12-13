@@ -12,7 +12,6 @@ function App() {
              <Route key = "favorites" path="/favourites" element={<Favourites />} />
              <Route key = "movie-details" exact path="/movie/:id" element={<MovieDetails/>} />
              <Route key = "noPage" path="*" element={<NoPage/>} />
-             <Route path="/*" element={<Home/>} />
            </Routes>
          </BrowserRouter>
            {/* <MovieDetails /> */}
