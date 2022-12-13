@@ -302,3 +302,7 @@ div.text a:hover {
 .arrow-down:hover{
   cursor: pointer;
  }
+
+.navbar-dropdown{
+  margin-right: 4%;
+}

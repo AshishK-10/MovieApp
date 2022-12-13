@@ -1,6 +1,28 @@
 import React, { Component } from 'react'
 
 export default class Navbar extends Component {
+  constructor(){
+    super()
+    this.state = {
+      curr_selected: [],
+    }
+  }
+
+  componentDidMount(){
+    this.setState({
+      curr_selected: JSON.parse(localStorage.getItem('nav-selected') == null
+                        ? "[]"
+                        : localStorage.getItem('nav-selected')),
+    })
+  }
+
+  handleNavChange = (e)=>{
+    let change = []
+    change.push(e)
+    localStorage.setItem('nav-selected', JSON.stringify(change));
+    this.setState({ curr_selected : [...change] })
+  }
+
   render() {
     return (
       <nav className="navbar navbar-brand fixed-top navbar-expand-lg navbar-dark bg-dark home-nav">
@@ -14,26 +36,20 @@ export default class Navbar extends Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className = "nav-link active" aria-current="page" href="/" onClick={()=>{this.setState({nav_link: 'home'})}}>Home</a>
+                <a className = {this.state.curr_selected.length > 0 && this.state.curr_selected[0] === "home" ? "nav-link active" : "nav-link"} aria-current="page" href="/" onClick={()=>this.handleNavChange('home')}>Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/favourites">Favourites</a>
+                <a className={this.state.curr_selected.length > 0 && this.state.curr_selected[0] === "favorites" ? "nav-link active" : "nav-link"} href="/favourites" onClick={()=>this.handleNavChange('favorites')}>Favourites</a>
               </li>
-              <li className="nav-item dropdown">
-                <a className ="nav-link dropdown-toggle" href = "/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            </ul>
+            <div className="d-flex nav-item dropdown navbar-dropdown">
+                <a className ="nav-link dropdown-toggle" href = "#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Dropdown
                 </a>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href  = "/">Series</a></li>
-                  <li><a className="dropdown-item" href="/">Actors</a></li>
-                  <li><hr className="dropdown-divider"/></li>
-                  <li><a className="dropdown-item" href="/">Send Feedback</a></li>
+                  <li><a className="dropdown-item" href="https://github.com/AshishK-10/MovieApp">Visit GitHub</a></li>
                 </ul>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href = "/">Login</a>
-              </li>
-            </ul>
+            </div>
           </div>
         </div>
       </nav>
