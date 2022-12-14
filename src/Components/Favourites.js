@@ -122,15 +122,14 @@ export default class Favourites extends Component {
 
     let pages = filter_array.length / this.state.limit;
     let pages_array = []
-    for(let i = 1; i <= pages ; ++i)
+    for(let i = 1; i <= pages + 1 ; ++i)
     {
       pages_array.push(i)
     }
     // this is the start index of current page
     let start_index = (this.state.curr_page - 1) * this.state.limit
     // this is the end  index of current page
-    let end_index = start_index + this.state.limit
-
+    let end_index = Math.min(start_index + this.state.limit,filter_array.length);
     filter_array = filter_array.slice(start_index, end_index)
 
     return (
@@ -193,7 +192,9 @@ export default class Favourites extends Component {
                 </thead>
                 <tbody>
                   {
-                    filter_array.map((movie,index) =>{
+                    filter_array.length === 0
+                    ? <p><b>No Data Found</b></p>
+                    :filter_array.map((movie,index) =>{
                       return (
                         <tr key = {index}>
                           <td>
